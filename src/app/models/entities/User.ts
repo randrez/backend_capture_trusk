@@ -6,7 +6,7 @@ import { Entity,
     Index} from "typeorm";
 import { Auth } from './Auth';
 
-@Entity()
+@Entity({name:"user_app"})
 export class User {
 
     @PrimaryGeneratedColumn()
