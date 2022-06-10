@@ -7,7 +7,6 @@ import { DecryptCrypto } from '../../config/decryptCrypto'
 
 const repository: AuthRepositoryImpl = new AuthRepositoryImpl()
 const decryptService: DecryptCrypto = new DecryptCrypto()
-
 export class AuthController {
 
     public static login(_req: Request, _res: Response) {

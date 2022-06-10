@@ -1,37 +1,34 @@
 import { Entity, 
     PrimaryGeneratedColumn, 
     Column, 
-    CreateDateColumn, 
-    Unique, 
     OneToOne, 
     JoinColumn, 
-    UpdateDateColumn,
     Index} from "typeorm";
 import { Auth } from './Auth';
 
-@Entity({name:'USER_APP'})
+@Entity()
 export class User {
 
-    @PrimaryGeneratedColumn({name:'ID'})
+    @PrimaryGeneratedColumn()
     public id!: number;
 
-    @Column({name:'FIRSTNAME'})
+    @Column()
     public firstName!: string;
 
-    @Column({name:'LASTNAME'})
+    @Column()
     public lastName!: string;
     
     @Index({ unique: true })
-    @Column({name:'EMAIL'})
+    @Column()
     public email!: string;
 
-    @CreateDateColumn({name:'CREATEDAT'})
+    @Column()
     public createdAt!: Date;
 
-    @UpdateDateColumn({name:'UPDATEDAT'})
+    @Column()
     public updatedAt!: Date;
 
     @OneToOne(() => Auth, (auth) => auth.user)
-    @JoinColumn({name:'AUTH_ID'})
+    @JoinColumn()
     public auth!: Auth
 }

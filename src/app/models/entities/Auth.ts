@@ -7,23 +7,23 @@ import { Entity,
     Index} from "typeorm";
 import {User} from "./User"
 
-@Entity({name:"AUTH"})
+@Entity()
 export class Auth {
 
-    @PrimaryGeneratedColumn({name:"ID"})
+    @PrimaryGeneratedColumn()
     public id!: number;
     
     @Index({ unique: true })
-    @Column({name:"USERNAME"})
+    @Column()
     public username!: string;
 
-    @Column({name:"PASSWORD"})
+    @Column()
     public password!: string;
 
-    @CreateDateColumn({name:"CREATEDAT", nullable:true})
+    @CreateDateColumn()
     public createdAt!: Date;
 
-    @UpdateDateColumn({name:"DATEUPDATE", nullable:true})
+    @UpdateDateColumn()
     public dateupdate!: Date;
 
     @OneToOne(() => User, (user:User) => user.auth)
