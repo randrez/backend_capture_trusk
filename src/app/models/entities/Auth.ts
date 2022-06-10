@@ -20,10 +20,10 @@ export class Auth {
     @Column()
     public password!: string;
 
-    @CreateDateColumn()
+    @CreateDateColumn({name:"created_at"})
     public createdAt!: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({name:"date_update"})
     public dateupdate!: Date;
 
     @OneToOne(() => User, (user:User) => user.auth)
