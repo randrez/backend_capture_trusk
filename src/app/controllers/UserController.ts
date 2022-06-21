@@ -11,4 +11,13 @@ export default class UserController {
             return _res.send(error)
         })
     }
+
+    public static getUserByEmail(_req: Request,_res: Response){
+        const { email } = _req.body
+        repository.getUserByEmail(email).then((response) =>{
+            return _res.send(response)
+        }).catch((error) => {
+            return _res.send(error)
+        })
+    }
 }

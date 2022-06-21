@@ -86,4 +86,15 @@ export class UserRepositoryImpl implements UserRepository {
         return hasDelete
     }
 
+    async getUserByEmail(email:string):Promise<User | null>{
+        try{
+            const repository = DataSource.getRepository(User)
+            const user = await repository.findOneBy({ email: email })
+            return user
+        }catch(error:any){
+            console.log(error.message)
+            return null
+        }
+    }
+
 }
