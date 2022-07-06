@@ -18,7 +18,7 @@ export class AuthRepositoryImpl implements AuthRepository {
             const auth = await repository.find({ where: { username: username } })
             if (auth != null && this.checkIfUnencryptedPasswordIsValid(auth[0].password, password)) {
                 const repositoryUser = DataSource.getRepository(User)
-                const user = await repositoryUser.find({where:{ auth: auth[0] }})
+                const user = await repositoryUser.find({ where: { auth: auth[0] } })
                 if (user != null) {
                     const tokenData = { username: username, password: this.hashPassword(password) }
                     const token = jwt.sign(tokenData, 'secret_password', {
@@ -29,7 +29,6 @@ export class AuthRepositoryImpl implements AuthRepository {
                     response.token = token
                     response.user = { id: user[0].id, firstName: user[0].firstName, lastName: user[0].lastName, email: user[0].email }
                 }
-
             }
         } catch (error: any) {
             response.message = error.message
@@ -37,7 +36,8 @@ export class AuthRepositoryImpl implements AuthRepository {
         return response
     }
 
-    async createUserAuth(modelUser: IUser, modelAuth: IAuth): Promise<User | null> {
+    async createUserAuth(modelUser: IUser, modelAuth: IAuth): Promise<JSON | null> {
+        const response = { message: '', userEntity:modelUser, error: true }
         try {
             const { username, password } = modelAuth
             const { firstName, lastName, email } = modelUser
@@ -55,18 +55,21 @@ export class AuthRepositoryImpl implements AuthRepository {
                 user.email = email
                 user.auth = auth
                 user.createdAt = new Date()
-                const userEntity = repositoryUser.save(user)
-                return userEntity
+                repositoryUser.save(user).then((user:User) => response.userEntity = user)
+                    .catch((error) => response.message = error.message)
+                response.error = false
             } else {
-                return null
+                response.message = 'Exception during save auth data'
             }
-        } catch (error) {
-            return null
+        } catch (error:any) {
+            response.message = error.message
         }
+
+        return JSON.parse(JSON.stringify(response))
     }
 
     public hashPassword(password: string): string {
-        return bcrypt.hashSync(password, 8);
+        return bcrypt.hashSync(password, 6);
     }
 
     public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string, password: string): boolean {

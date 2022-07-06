@@ -5,5 +5,5 @@ import { IUser } from '../../models/User'
 
 export interface AuthRepository {
     login(username: string, password: string): Promise<ResponseLogin | null>
-    createUserAuth(modelUser: IUser, modelAuth: IAuth): Promise<User | null>
+    createUserAuth(modelUser: IUser, modelAuth: IAuth): Promise<JSON | null>
 }

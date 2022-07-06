@@ -3,7 +3,8 @@ import { Entity,
     Column, 
     OneToOne, 
     JoinColumn, 
-    Index} from "typeorm";
+    Index,
+    CreateDateColumn} from "typeorm";
 import { Auth } from './Auth';
 
 @Entity({name:"user_app"})
@@ -22,6 +23,7 @@ export class User {
     @Column({name:"email"})
     public email!: string;
 
+    @CreateDateColumn()
     @Column({name:"created_at"})
     public createdAt!: Date;
 
