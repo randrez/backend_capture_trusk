@@ -19,6 +19,7 @@ export class AuthRepositoryImpl implements AuthRepository {
             if (auth != null && this.checkIfUnencryptedPasswordIsValid(auth[0].password, password)) {
                 const repositoryUser = DataSource.getRepository(User)
                 const user = await repositoryUser.find({ where: { auth: auth[0] } })
+                console.log(auth[0])
                 if (user != null) {
                     const tokenData = { username: username, password: this.hashPassword(password) }
                     const token = jwt.sign(tokenData, 'secret_password', {
@@ -31,6 +32,7 @@ export class AuthRepositoryImpl implements AuthRepository {
                 }
             }
         } catch (error: any) {
+            console.log(error)
             response.message = error.message
         }
         return response
@@ -73,6 +75,6 @@ export class AuthRepositoryImpl implements AuthRepository {
     }
 
     public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string, password: string): boolean {
-        return bcrypt.compareSync(password, unencryptedPassword);
+       return bcrypt.compareSync(password, unencryptedPassword);
     }
 }

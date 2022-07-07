@@ -11,8 +11,7 @@ export class AuthController {
 
     public static login(_req: Request, _res: Response) {
         const { username, password } = _req.body
-        const passwordDencrypt = decryptService.decrypt(KEY, password.toString())
-        repository.login(username, passwordDencrypt).then((login) => {
+        repository.login(username, password).then((login) => {
             return _res.send(login)
         }).catch((error) => {
             return _res.send(error)
